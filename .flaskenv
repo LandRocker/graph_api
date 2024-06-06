@@ -1,0 +1,7 @@
+SUBGRAPH_ENDPOINT = https://api.thegraph.com/subgraphs/name/landrocker-org/landrocker
+CACHE_TYPE =
+CACHE_REDIS_HOST =
+CACHE_REDIS_PORT =
+CACHE_REDIS_URL =
+CACHE_DEFAULT_TIMEOUT =
+SUBGRAPH_ENDPOINT =
