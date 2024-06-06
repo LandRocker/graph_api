@@ -42,7 +42,8 @@ def getLRTTotalSupply():
     df['current_supply'] = df['tokens_totalMinted'] - df['tokens_totalBurnt']  
     total_supply = int(totalMint) - int(totalBurnt)
 
-    return jsonify(total_supply)
+    value_in_ether = Web3.from_wei(total_supply, 'ether')
+    return jsonify(int(value_in_ether))
        
 def getLRTCirculationAmount(): 
     sale_first = getClaimedTokenByPlanId("0x0")      
@@ -67,7 +68,8 @@ def getLRTCirculationAmount():
    
     total_circulation_amount = int(sale_first) + int(sale_second) + int(team_first) + int(stake) + int(uniswap_liquidity_first)+ int(uniswap_liquidity_second)+ int(mexc_liquidity_first) + int(mexc_liquidity_second) + int(mexc_liquidity_third) + int(cls)
     # total_circulation_amount = Web3.from_wei((total_circulation_amount), 'ether')  
-    return jsonify(total_circulation_amount)
+    value_in_ether = Web3.from_wei(total_circulation_amount, 'ether')
+    return jsonify(int(value_in_ether))
     # return jsonify({"total_circulation_amount": str(total_circulation_amount),"stake":str(stake), "sale_first": str(sale_first), "sale_second": str(sale_second),"team_first": str(team_first),"uniswap_liquidity": str(uniswap_liquidity),"mexci_liquidity_first": str(mexci_liquidity_first),"mexci_liquidity_second": str(mexci_liquidity_second)})
    
 def getClaimedTokenByPlanId(planId):
