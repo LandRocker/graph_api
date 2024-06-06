@@ -15,7 +15,6 @@ pd.options.mode.chained_assignment = None
 # Instantiate the config 
 config = BaseConfig()
 
-
 # Load 
 landRocker = sg.load_subgraph(config.SUBGRAPH_URL)
 
