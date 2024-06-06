@@ -1,0 +1,8 @@
+Flask
+subgrounds
+pandas
+web3
+datetime
+python-dotenv
+gunicorn
+redis

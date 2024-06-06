@@ -1,0 +1,53 @@
+version: "3.6"
+
+services:
+  app-testnet:
+    build:
+      context: .
+      args:
+        FLASK_ENV: development
+    container_name: 'app-testnet'
+    ports:
+      - 5001:5000
+    volumes:
+      - ./:/app
+    env_file:
+      - .env.testnet
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: app.py  
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  app-mainnet:
+    build:
+      context: .
+      args:
+        FLASK_ENV: production
+    container_name: 'app-mainnet'
+    ports:
+      - 5002:5000
+    volumes:
+      - ./:/app
+    env_file:
+      - .env.mainnet
+    environment:
+      FLASK_ENV: production
+      FLASK_APP: app.py  # Update with the path to your main app module
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis
+    container_name: 'redis'
+    ports:
+      - 6380:6379
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+
+volumes:
+  redis_data:
