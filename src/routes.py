@@ -11,14 +11,14 @@ def index():
   return "hello landRocker"
 
 @main.route('/lrt-total-supply')
-@handle_exceptions
-@cache_request(timeout=60)
+#@handle_exceptions
+#@cache_request(timeout=60)
 def lrtTotalSupply():
     return getLRTTotalSupply()
 
 @main.route('/lrt-circulation-supply')
-@handle_exceptions
-@cache_request(timeout=60)
+#@handle_exceptions
+#@cache_request(timeout=60)
 def lrtCirculationAmount(): 
     return getLRTCirculationAmount()
 
