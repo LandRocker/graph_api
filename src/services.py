@@ -46,25 +46,28 @@ def getLRTTotalSupply():
     return jsonify(int(Web3.from_wei(total_supply, 'ether')))
        
 def getLRTCirculationAmount(): 
-    sale_first = getClaimedTokenByPlanId("0x0")      
-    sale_first = Web3.from_wei(sale_first, 'ether')  
+
+
+    total_supply = 10000000000000000000000000000
+
+    lrt_contract_balance = getUserBalance("0xfb7f8A2C0526D01BFB00192781B7a7761841B16C")
+    liquidity = getUserBalance("0x9A0e8cB86CeA03Cd3124b9002884e2d4C806A233")
+    game_incentives = getUserBalance("0x1f34744f5ACa6DCA7D6ae27D73367b842bDaF80c")
+    marketing = getUserBalance("0xf088d55055aE1A6ad45D3Cf97F7B4c4f7b46Bd79")
+    treasury = getUserBalance("0x453b8AD0aae7AD825c6f6C6A257660F5b3fd3f5F")
+    team = getUserBalance("0x60E1c0A693C7ac771f12b3fBA694d5D53216E4b1")
+    marketing_op1 = getUserBalance("0x5fB4955A9E5C9048e6096292ccE324B9f520184C")
+    advisor = getUserBalance("0x27d3Cd95b93101771826A2e0a7564A2dc34aEC3d")
+    marketing_op2 = getUserBalance("0x2C8516Dc7F27DC8509Ee9027b28C71C74032ABFd")
+    marketing_op3 = getUserBalance("0x4AD2a74568E51f81911a522587A1EFDc821968AE")
+    private_sale = getUserBalance("0x71aceEcf818Ab295416e8E59704Af2C894beB174")
+    liquidity_provisioning= getUserBalance("0xf3ECa2D9C3C9c6b7BE4B4dA35722Af0DdC7dAA90")
+    reserved_wallet = int(lrt_contract_balance) + int(liquidity) + int(game_incentives) + int(marketing) +int(treasury) +int(team) +int(marketing_op1) +int(advisor) +int(marketing_op2) +int(marketing_op3) +int(private_sale) +int(liquidity_provisioning)    # sale_first = getClaimedTokenByPlanId("0x0")      
     
-    sale_second = getClaimedTokenByPlanId("0x6")      
-    sale_second = Web3.from_wei(sale_second, 'ether')  
+    total_circulation_amount = int(total_supply) - reserved_wallet
+   
+    total_circulation_amount = Web3.from_wei(total_circulation_amount, 'ether')
 
-    team_first = getUnlockedTeamToken()      
-    team_first = Web3.from_wei(team_first, 'ether')  
-
-    stake = getStakingCirculation()
-
-    uniswap_liquidity_first = 75000000
-    uniswap_liquidity_second = 20000000
-    mexc_liquidity_first = 30000000
-    mexc_liquidity_second = 5000000
-    mexc_liquidity_third = 20000000
-    cls = 11880000
-
-    total_circulation_amount = int(sale_first) + int(sale_second) + int(team_first) + int(stake) + int(uniswap_liquidity_first)+ int(uniswap_liquidity_second)+ int(mexc_liquidity_first) + int(mexc_liquidity_second) + int(mexc_liquidity_third) + int(cls)
     return jsonify(total_circulation_amount)
    
 def getClaimedTokenByPlanId(planId):
@@ -138,3 +141,24 @@ def getStakingCirculation():
     # total_stake_circulation = df['lrtStakingStats_totalClaimedLRTReward']
     # return total_stake_circulation    
     return total_stake_circulation;
+
+
+def getUserBalance(balance):      
+    users = landRocker.Query.users(
+        where=[
+            landRocker.User.address == balance
+        ]
+    )
+        
+    field_paths = [
+        users.balance
+    ]
+
+    df = sg.query_df(field_paths)
+
+    # Check if the DataFrame is empty
+    if df.empty:
+        return jsonify({"error": "No records found for the specified collection and token ID"})
+
+    userBalance = df['users_balance']
+    return userBalance;
