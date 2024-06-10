@@ -68,7 +68,7 @@ def getLRTCirculationAmount():
    
     total_circulation_amount = Web3.from_wei(total_circulation_amount, 'ether')
 
-    return jsonify(total_circulation_amount)
+    return jsonify(float(total_circulation_amount))
    
 def getClaimedTokenByPlanId(planId):
     userVesting = landRocker.Query.userVestings(
